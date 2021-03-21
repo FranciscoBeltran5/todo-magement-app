@@ -1,0 +1,32 @@
+{
+  "development": {
+    "username": "debian-sys-maint",
+    "password": "JaM8wpqkOzNSO3lA",
+    "database": "Todos",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define": {
+      "timestamps": false
+    }
+  },
+  "test": {
+    "username": "debian-sys-maint",
+    "password": "JaM8wpqkOzNSO3lA",
+    "database": "Todos",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define": {
+      "timestamps": false
+    }
+  },
+  "production": {
+    "username": "debian-sys-maint",
+    "password": "JaM8wpqkOzNSO3lA",
+    "database": "Todos",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "define": {
+      "timestamps": false
+    }
+  }
+}
