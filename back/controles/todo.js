@@ -7,7 +7,10 @@ module.exports = {
         .create ({
              name: req.body.name,
              title: req.body.title,
-             completed: req.body.completed
+             description: req.body.description,
+             completed: false,
+             createdAt: Sequelize.fn('NOW'),
+             updatedAt: Sequelize.fn('NOW')
         })
         .then(Todo => res.status(200).send(Todo))
         .catch(error => res.status(400).send(error))
@@ -30,7 +33,9 @@ module.exports = {
       if (put) {
         todo.name = req.body.name
         todo.title = req.body.title
+        todo.description = req.body.description
       }
+      todo.updatedAt = Sequelize.fn('NOW')
       todo.save()
         .then(Todo => res.status(200).send(Todo))
         .catch(error => res.status(400).send(error))

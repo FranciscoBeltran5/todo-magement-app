@@ -15,6 +15,7 @@ module.exports = {
       {
         name: 'First',
         title: 'Todo',
+        description: 'This is the description of the first Item',
         completed: false,
         createdAt: Sequelize.fn('NOW'),
         updatedAt: Sequelize.fn('NOW')
@@ -22,7 +23,8 @@ module.exports = {
       {
         name: 'Second',
         title: 'Todo',
-        completed: false,
+        description: 'This is the description of the second Item',
+        completed: true,
         createdAt: Sequelize.fn('NOW'),
         updatedAt: Sequelize.fn('NOW')
       }

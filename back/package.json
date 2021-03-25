@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "create": "npx sequelize db:create && npx sequelize-cli model:generate --name Todo --attributes name:string,title:string,completed:boolean --force",
-    "config": "sequelize db:migrate && sequelize db:seed:all && node bin/www"
+    "create": "npx sequelize db:create && npx sequelize-cli model:generate --name Todo --attributes name:string,title:string,description:string,completed:boolean --force",
+    "config": "sequelize db:migrate && sequelize db:seed:all"
   },
   "repository": {
     "type": "git",

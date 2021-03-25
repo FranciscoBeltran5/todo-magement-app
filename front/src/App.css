@@ -140,7 +140,15 @@
 }
 
 .otroAzul {
-  color: navy;
+  background-color: navy !important;
+  outline-color: navy !important;
+}
+
+.textoBlanco {
+  color: white !important;
+}
+.textoAzul {
+  color: navy !important;
 }
 
 .iconoBotPan {

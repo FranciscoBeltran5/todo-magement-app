@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  cambiaModal
+  addNewTodo,
+  updateTodo,
+  cambiaModal,
+  cambiaNewOrEdit,
+  cambiaSeleccionado,
+  cambiaCampoSeleccionado
 } from './features/todo/todoSlice';
 import { Container, Col, Row, Modal, Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import { Todo } from './features/todo/Todo';
@@ -17,13 +22,6 @@ function App() {
   const newOrEdi = useSelector(state => state.todos.newOrEdit)
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const formSubmit = e => {
-    e.preventDefault()
-    const formData = new FormData(e.target), formDataObj = Object.fromEntries(formData.entries())
-    setShow(false)
-    console.log(formDataObj)
-    handleClose()
-  }
 
   const updateModal = (isVisible) => {
   	this.state.isVisible = isVisible;
@@ -31,9 +29,27 @@ function App() {
   }
 
   const estadoModal = useSelector(state => state.todos.modal)
+  const todoSeleccionado = useSelector(state => state.todos.todoSeleccionado)
 
   const anadeTask = () => {
+    dispatch(cambiaSeleccionado({
+      title: '',
+      description: ''
+    }))
+    dispatch(cambiaNewOrEdit(true))
     dispatch(cambiaModal(true))
+  }
+
+  const submitModal = (e) => {
+    e.preventDefault()
+    if (newOrEdi) {
+      dispatch(cambiaCampoSeleccionado({"campo":"title","valor":""}))
+      dispatch(cambiaCampoSeleccionado({"campo":"description","valor":""}))
+      dispatch(addNewTodo(todoSeleccionado))
+    } else {
+      dispatch(updateTodo(todoSeleccionado))
+    }
+    dispatch(cambiaModal(false))
   }
 
   return (
@@ -49,7 +65,7 @@ function App() {
           <Col xs={2}>
             <InputGroup>
               <FormControl
-                placeholder="Username"
+                placeholder="12/May/2021"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
               />
@@ -61,7 +77,7 @@ function App() {
             </InputGroup>
           </Col>
           <Col xs={2} className="separador">
-            <Button onClick={anadeTask} variant="outline-primary" className="centro-contenido boton-icono">
+            <Button onClick={anadeTask} variant="outline-primary textoAzul" className="centro-contenido boton-icono">
               <PlusCircle className="iconoCirculo"></PlusCircle>Add Task
             </Button>
           </Col>
@@ -77,23 +93,35 @@ function App() {
             <Modal.Title>{(newOrEdi) ? 'New' : 'Edit'} Task</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form.Group controlId="formBasicEmail">
+            <Form.Group controlId="formTitle">
               <Form.Label>Title (Required)</Form.Label>
-              <Form.Control type="text"/>
-              <Form.Text className="text-muted">
-                Valor obligatorio
-              </Form.Text>
+              <InputGroup hasValidation>
+                <Form.Control
+                  type="text"
+                  value={todoSeleccionado.title}
+                  onChange={(e) => {dispatch(cambiaCampoSeleccionado({"campo":"title","valor":e.target.value}))}}
+                  required
+                />
+                <Form.Control.Feedback type="invalid">
+                  Required
+                </Form.Control.Feedback>
+              </InputGroup>
             </Form.Group>
-            <Form.Group controlId="formBasicPassword">
+
+            <Form.Group controlId="formDescription">
               <Form.Label>Description</Form.Label>
-              <Form.Control type="text"/>
+              <Form.Control
+                type="text"
+                value={todoSeleccionado.description}
+                onChange={(e) => {dispatch(cambiaCampoSeleccionado({"campo":"description","valor":e.target.value}))}}
+              />
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => dispatch(cambiaModal(false))}>
               Cancel
             </Button>
-            <Button variant="primary" type="submit" onClick={formSubmit}>
+            <Button variant="primary" type="submit" onClick={submitModal} className="otroAzul textoBlanco">
               Save
             </Button>
           </Modal.Footer>
